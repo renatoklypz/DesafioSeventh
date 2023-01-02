@@ -6,15 +6,16 @@ namespace DesafioSeventh.Domain.ViewModel
 	public class ServerUpdate
 	{
 
-		[Required]
-		[StringLength(50)]
+		[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_REQUIRED)]
+		[StringLength(50, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_STRING_LENGTH)]
 		public string Name { get; set; } = null;
 
-		[Required]
-		[RegularExpression(Config.REGEX_IP)]
+		[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_REQUIRED)]
+		[StringLength(20, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_STRING_LENGTH)]
+		[RegularExpression(Config.REGEX_IP, ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_IPVALIDATION)]
 		public string IP { get; set; } = null;
 
-		[Required]
+		[Required(ErrorMessageResourceType = typeof(Messages), ErrorMessageResourceName = Config.VAL_REQUIRED)]
 		public int? Port { get; set; } = null;
 	}
 }

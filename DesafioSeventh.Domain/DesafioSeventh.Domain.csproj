@@ -10,6 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Global\ErrorMap.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>ErrorMap.resx</DependentUpon>
+    </Compile>
     <Compile Update="Global\Messages.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -18,6 +23,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Global\ErrorMap.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ErrorMap.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Global\Messages.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Messages.Designer.cs</LastGenOutput>

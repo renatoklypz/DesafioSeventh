@@ -6,7 +6,7 @@ namespace DesafioSeventh.Domain.Global
 {
 	public class ConflictException : ExceptionCode
 	{
-		public ConflictException(string field) : base(409, string.Format(Messages.Conflict, field))
+		public ConflictException(string field) : base("err_conflict", string.Format(Messages.Conflict, field))
 		{
 
 		}

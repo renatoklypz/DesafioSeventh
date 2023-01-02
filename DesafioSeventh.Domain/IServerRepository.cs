@@ -11,5 +11,6 @@ namespace DesafioSeventh.Domain
 		IEnumerable<Server> Get();
 		Server Get(Guid id);
 		Server Remove(Guid id);
+		bool Exists(Guid id);
 	}
 }

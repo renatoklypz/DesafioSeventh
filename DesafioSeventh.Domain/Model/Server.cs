@@ -24,7 +24,7 @@ namespace DesafioSeventh.Domain.Model
 		public string IP { get; set; } = null;
 
 		[Required]
-		public int? Port { get; set; }
+		public int Port { get; set; }
 
 		public virtual IEnumerable<Video> Videos { get; set; } = null;
 	}

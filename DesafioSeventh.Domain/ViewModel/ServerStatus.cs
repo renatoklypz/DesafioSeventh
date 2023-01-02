@@ -7,6 +7,7 @@ namespace DesafioSeventh.Domain.ViewModel
 	{
 		[JsonIgnore]
 		public ServerStatusEnum StatusEnum { get; set; } = ServerStatusEnum.NotRunning;
+		
 		public string Status { get => Messages.ResourceManager.GetString(StatusEnum.ToString()); }
 	}
 }

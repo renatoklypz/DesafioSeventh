@@ -6,22 +6,6 @@ using System.Data.Entity;
 
 namespace DesafioSeventh.Infra.Data
 {
-	public class DBContextDefault: DbContext
-	{
-		public DBContextDefault(DbConnection dbConnection): base(dbConnection, true)
-		{
-
-		}
-
-		public DbSet<Server> Servers { get; set; }
-		public DbSet<Video> Videos { get; set; }
-
-		protected override void OnModelCreating(DbModelBuilder modelBuilder)
-		{
-			base.OnModelCreating(modelBuilder);
-		}
-	}
-
 	public class ServerRepository : IServerRepository
 	{
 		readonly DBContextDefault context;
@@ -32,30 +16,44 @@ namespace DesafioSeventh.Infra.Data
 		}
 		public Server? Create(Server servidor)
 		{
-			context.Entry(servidor);
+			context.Servers.Add(servidor);
 			context.SaveChanges();
 
 			return context.Servers.FirstOrDefault(p=> p.Id == servidor.Id);
 		}
 
-		public IEnumerable<Server> Get()
+		public bool Exists(Guid id)
 		{
-			throw new NotImplementedException();
+			return context.Servers.Any(p => p.Id == id);
 		}
 
-		public Server Get(Guid id)
+		public IEnumerable<Server> Get()
 		{
-			throw new NotImplementedException();
+			return context.Servers;
+		}
+
+		public Server? Get(Guid id)
+		{
+			return context.Servers.FirstOrDefault(f => f.Id == id);
 		}
 
 		public Server Remove(Guid id)
 		{
-			throw new NotImplementedException();
+			var server = context.Servers.FirstOrDefault(f => f.Id == id);
+			_ = context.Entry(server).State = EntityState.Deleted;
+			context.SaveChanges();
+
+			return server;
 		}
 
 		public Server Update(Guid id, Server servidor)
 		{
-			throw new NotImplementedException();
+			var a = context.Servers.FirstOrDefault(f => f.Id == id);
+			context.Entry(a).State = EntityState.Detached;
+			servidor.Id = id;
+			context.Entry(servidor).State = EntityState.Modified;
+			context.SaveChanges();
+			return servidor;
 		}
 	}
 }

@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Common;
+using System.Net.Sockets;
 
 namespace DesafioSeventh.Service
 {
@@ -43,7 +44,7 @@ namespace DesafioSeventh.Service
 
 			var srv = _map.Map<Server>(server);
 
-			if (repository.Get(srv.Id) != null)
+			if (repository.Exists(srv.Id))
 			{
 				throw new ConflictException("Id");
 			}
@@ -55,27 +56,76 @@ namespace DesafioSeventh.Service
 
 		public IEnumerable<Server> Get()
 		{
-			throw new NotImplementedException();
+			return repository.Get();
 		}
 
 		public Server Get(Guid id)
 		{
-			throw new NotImplementedException();
+			return repository.Get(id);
 		}
 
 		public Server Remove(Guid id)
 		{
-			throw new NotImplementedException();
+
+			if (!repository.Exists(id))
+			{
+				throw new NotExistsException("Server", id.ToString());
+			}
+
+			return repository.Remove(id);
 		}
 
 		public ServerStatus ServerStatus(Guid id)
 		{
-			throw new NotImplementedException();
+			ServerStatus result = new();
+			if (!repository.Exists(id))
+			{
+				throw new NotExistsException("Server", id.ToString());
+			}
+			var server = repository.Get(id);
+
+			using (TcpClient client = new())
+			{
+				try
+				{
+					client.Connect(server.IP, server.Port);
+
+					using NetworkStream ClientStream = client.GetStream();
+					result.StatusEnum = ServerStatusEnum.Running;
+				}
+				catch (SocketException)
+				{
+					result.StatusEnum = ServerStatusEnum.NotRunning;
+				}
+			}
+
+			return result;
 		}
 
 		public Server Update(Guid id, ServerUpdate servidor)
 		{
-			throw new NotImplementedException();
+			if (!repository.Exists(id))
+			{
+				throw new NotExistsException("Server", id.ToString());
+			}
+			else
+			{
+				var serverOld = Get(id);
+				var serverUp = _map.Map<Server>(servidor);
+				serverUp.Id = id;
+				serverUp.ModifiedAt = DateTime.Now;
+				serverUp.CreatedAt = serverOld.CreatedAt;
+
+				var resultadoValidacao = new List<ValidationResult>();
+				var contexto = new ValidationContext(servidor, null, null);
+				if (!Validator.TryValidateObject(servidor, contexto, resultadoValidacao, true))
+				{
+					throw new CodeValidationException(resultadoValidacao, nameof(Server));
+				}
+
+				repository.Update(id, serverUp);
+				return serverUp;
+			}
 		}
 	}
 }

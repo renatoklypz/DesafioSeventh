@@ -10,6 +10,7 @@ namespace DesafioSeventh.Service.Maps
 		public AMProfile()
 			: base()
 		{
+			CreateMap<ServerUpdate, Server>();
 			CreateMap<ServerCreate, Server>().BeforeMap((s, d) =>
 			{
 				if(s.Id == null)

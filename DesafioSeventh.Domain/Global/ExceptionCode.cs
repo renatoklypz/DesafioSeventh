@@ -4,11 +4,11 @@ namespace DesafioSeventh.Domain.Global
 {
 	public class ExceptionCode : Exception
 	{
-		public int HttpCode { get; }
+		public string Code { get; }
 
-		public ExceptionCode(int httpCode, string message) : base(message)
+		public ExceptionCode(string code, string message) : base(message)
 		{
-			HttpCode = httpCode;
+			Code = code;
 		}
 	}
 }
