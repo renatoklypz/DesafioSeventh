@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace DesafioSeventh.Domain.ViewModel
 {
-	public class ServerStatus
+	public class RecycleStatus
 	{
 		[JsonIgnore]
 		public ServerStatusEnum StatusEnum { get; set; } = ServerStatusEnum.NotRunning;

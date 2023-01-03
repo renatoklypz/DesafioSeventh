@@ -5,13 +5,13 @@ VisualStudioVersion = 17.2.32616.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Web", "DesafioSeventh.Web\DesafioSeventh.Web.csproj", "{C3A06C09-EDDC-44FB-9977-9863BB75B20B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSeventh.Domain", "DesafioSeventh.Domain\DesafioSeventh.Domain.csproj", "{BD88615F-FA08-46B4-A99C-A4CC0D360074}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Domain", "DesafioSeventh.Domain\DesafioSeventh.Domain.csproj", "{BD88615F-FA08-46B4-A99C-A4CC0D360074}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSeventh.Service", "DesafioSeventh.Service\DesafioSeventh.Service.csproj", "{C68246F5-D21B-4BC7-B2AE-167DAB6FE09E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Service", "DesafioSeventh.Service\DesafioSeventh.Service.csproj", "{C68246F5-D21B-4BC7-B2AE-167DAB6FE09E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSeventh.Tests", "DesafioSeventh.Tests\DesafioSeventh.Tests.csproj", "{EBD46E40-B1D9-42D9-A006-78B09F2CE2F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Tests", "DesafioSeventh.Tests\DesafioSeventh.Tests.csproj", "{EBD46E40-B1D9-42D9-A006-78B09F2CE2F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioSeventh.Infra.Data", "DesafioSeventh.Infra.Data\DesafioSeventh.Infra.Data.csproj", "{8351BFA9-7079-4D98-A404-DB349921170F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Infra.Data", "DesafioSeventh.Infra.Data\DesafioSeventh.Infra.Data.csproj", "{8351BFA9-7079-4D98-A404-DB349921170F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

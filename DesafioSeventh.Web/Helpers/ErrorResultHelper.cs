@@ -11,7 +11,8 @@ namespace DesafioSeventh.Web.Helpers
 		{
 			{"err_conflict", HttpStatusCode.Conflict },
 			{"err_not_exists", HttpStatusCode.NotFound },
-			{"err_validation", HttpStatusCode.BadRequest }
+			{"err_validation", HttpStatusCode.BadRequest },
+			{"vid_invalid_file", HttpStatusCode.BadRequest }
 		};
 
 		public static void UseErrorMap(this IApplicationBuilder app, Dictionary<string, HttpStatusCode>? errorCodes = null)

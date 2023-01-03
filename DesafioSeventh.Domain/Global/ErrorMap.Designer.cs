@@ -68,5 +68,32 @@ namespace DesafioSeventh.Domain.Global {
                 return ResourceManager.GetString("NotExists", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Video inválido: &quot;{0}&quot;.
+        /// </summary>
+        internal static string vid_invalid_file {
+            get {
+                return ResourceManager.GetString("vid_invalid_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O formato do arquivo é inválido ({0}), considere utilizar: [{1}].
+        /// </summary>
+        internal static string vid_invalid_file_format {
+            get {
+                return ResourceManager.GetString("vid_invalid_file_format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a O arquivo parece não ter conteúdo.
+        /// </summary>
+        internal static string vid_invalid_file_size_zero {
+            get {
+                return ResourceManager.GetString("vid_invalid_file_size_zero", resourceCulture);
+            }
+        }
     }
 }

@@ -8,11 +8,11 @@ namespace DesafioSeventh.Web.Controllers
 {
 	[ApiController]
 	[Route("api/[controller]")]
-	public class ServerController : ControllerBase
+	public class ServersController : ControllerBase
 	{
 		private readonly IServerDomain domain;
 
-		public ServerController(IServerDomain domain)
+		public ServersController(IServerDomain domain)
 		{
 			this.domain = domain;
 		}
@@ -45,7 +45,9 @@ namespace DesafioSeventh.Web.Controllers
 		[ProducesResponseType(400, Type = typeof(WebException))]
 		public Server Create([FromBody] ServerCreate server)
 		{
-			return domain.Create(server);
+			var result = domain.Create(server);
+			Response.StatusCode = 201;
+			return result;
 		}
 
 		/// <summary>
@@ -78,6 +80,6 @@ namespace DesafioSeventh.Web.Controllers
 		[HttpGet("available/{id}")]
 		[ProducesResponseType(200)]
 		[ProducesResponseType(404, Type = typeof(WebException))]
-		public ServerStatus Available(Guid id) => domain.ServerStatus(id);
+		public RecycleStatus Available(Guid id) => domain.ServerStatus(id);
 	}
 }

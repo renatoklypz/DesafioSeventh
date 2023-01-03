@@ -13,6 +13,7 @@ namespace DesafioSeventh.Service.Maps
 			: base(a =>
 			{
 				a.AddProfile<AMProfile>();
+				a.AddProfile<VideoProfile>();
 			})
 		{
 		}

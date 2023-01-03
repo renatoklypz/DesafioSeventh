@@ -1,6 +1,12 @@
 using DesafioSeventh.Web.Helpers;
+using DesafioSeventh.Web.Workers;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.ConfigureServices(services =>
+{
+	services.AddHostedService<DeleteServerWorker>();
+});
+
 SetupHelper.Configuration = builder.Configuration;
 
 // Add services to the container.

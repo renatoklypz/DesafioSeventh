@@ -120,4 +120,13 @@
   <data name="NotExists" xml:space="preserve">
     <value>Registro "{1}" não encontrado em [{0}]</value>
   </data>
+  <data name="vid_invalid_file" xml:space="preserve">
+    <value>Video inválido: "{0}"</value>
+  </data>
+  <data name="vid_invalid_file_format" xml:space="preserve">
+    <value>O formato do arquivo é inválido ({0}), considere utilizar: [{1}]</value>
+  </data>
+  <data name="vid_invalid_file_size_zero" xml:space="preserve">
+    <value>O arquivo parece não ter conteúdo</value>
+  </data>
 </root>

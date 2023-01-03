@@ -13,7 +13,7 @@ namespace DesafioSeventh.Service.Maps
 			CreateMap<ServerUpdate, Server>();
 			CreateMap<ServerCreate, Server>().BeforeMap((s, d) =>
 			{
-				if(s.Id == null)
+				if (s.Id == null)
 				{
 					s.Id = Guid.NewGuid();
 				}

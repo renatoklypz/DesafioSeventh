@@ -9,13 +9,14 @@ namespace DesafioSeventh.Domain.Model
 	{
 		[Key]
 		public Guid Id { get; set; } = Guid.NewGuid();
-		public DateTime CriadoEm { get; set; } = DateTime.Now;
+		public DateTime CreatedAt { get; set; } = DateTime.Now;
+		public DateTime ModifiedAt { get; set; } = DateTime.Now;
 		[StringLength(255), Required]
 		public string Description { get; set; } = null;
-		public int? SizeInBytes { get; set; } = null;
-		public Guid ServidorId { get; set; }
+		public long SizeInBytes { get; set; } = 0;
+		public Guid ServerId { get; set; }
 
-		[ForeignKey("ServidorId")]
-		public virtual Server Servidor { get; set; } = null;
+		[ForeignKey("ServerId")]
+		public virtual Server Server { get; set; } = null;
 	}
 }

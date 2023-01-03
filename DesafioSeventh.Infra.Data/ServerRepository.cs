@@ -1,6 +1,5 @@
 ﻿using DesafioSeventh.Domain;
 using DesafioSeventh.Domain.Model;
-using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
 
@@ -19,7 +18,7 @@ namespace DesafioSeventh.Infra.Data
 			context.Servers.Add(servidor);
 			context.SaveChanges();
 
-			return context.Servers.FirstOrDefault(p=> p.Id == servidor.Id);
+			return context.Servers.FirstOrDefault(p => p.Id == servidor.Id);
 		}
 
 		public bool Exists(Guid id)

@@ -6,10 +6,13 @@ using Newtonsoft.Json.Serialization;
 using System.Data.Common;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Metadata;
+using DesafioSeventh.Web.Providers;
+using DesafioSeventh.Domain.Providers;
+using DesafioSeventh.Domain.Model;
 
 namespace DesafioSeventh.Web.Helpers
 {
-	public class TEE: IMetadataDetailsProvider
+	public class TEE : IMetadataDetailsProvider
 	{
 
 	}
@@ -35,8 +38,33 @@ namespace DesafioSeventh.Web.Helpers
 
 		public static IServiceCollection AddInject(this IServiceCollection services)
 		{
+			services.AddTransient<IScheduleRemoveProvider<Server>, ScheduleServerProvider>();
+			services.AddTransient<IScheduleRemoveWorkerProvider<Server>, ScheduleServerProvider>();
+			services.AddTransient<IScheduleRemoveProvider<Video>, ScheduleVideoProvider>();
+			services.AddTransient<IScheduleRemoveWorkerProvider<Video>, ScheduleVideoProvider>();
+
+			services.AddTransient<IVideoFileProvider>(_ => new VideoFileProvider(Configuration["VideoConfig:Path"], Configuration.GetSection("VideoConfig:AcceptedExtensions").Get<string[]>()));
 			services.AddTransient<IServerRepository>(_ => new ServerRepository(GetConnection()));
-			services.AddTransient<IServerDomain, ServerService>();
+			services.AddTransient<IVideoRepository>(_ => new VideoRepository(GetConnection()));
+
+			services.AddTransient<IServerDomain>((s) =>
+			{
+				var result = new ServerService(s.GetService<IServerRepository>());
+
+				result.OnBeforeServerDelete += (id) =>
+				{
+					var vp = s.GetService<IScheduleRemoveProvider<Server>>();
+					vp.Set(result.Get(id));
+
+					var vd = s.GetService<IVideoDomain>();
+
+					vd.DeleteAll(serverId: id);
+
+				};
+				return result;
+			});
+
+			services.AddTransient<IVideoDomain, VideoService>();
 			return services;
 		}
 	}

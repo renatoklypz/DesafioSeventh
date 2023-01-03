@@ -28,6 +28,13 @@ namespace DesafioSeventh.Service
 			this.repository = repository;
 		}
 
+		public event ServerEventHandler OnAfterServerCreate;
+		public event ServerEventHandler OnBeforeServerCreate;
+		public event ServerEventHandler OnAfterServerUpdate;
+		public event ServerEventHandler OnBeforeServerUpdate;
+		public event ServerEventHandler OnAfterServerDelete;
+		public event ServerEventHandler OnBeforeServerDelete;
+
 		public Server Create(ServerCreate server)
 		{
 			if (server is null)
@@ -49,7 +56,10 @@ namespace DesafioSeventh.Service
 				throw new ConflictException("Id");
 			}
 
+			OnBeforeServerCreate?.Invoke(srv.Id);
 			srv = repository.Create(srv);
+			OnAfterServerCreate?.Invoke(srv.Id);
+
 
 			return srv;
 		}
@@ -72,12 +82,15 @@ namespace DesafioSeventh.Service
 				throw new NotExistsException("Server", id.ToString());
 			}
 
-			return repository.Remove(id);
+			OnBeforeServerDelete?.Invoke(id);
+			var result = repository.Remove(id);
+			OnAfterServerDelete?.Invoke(id);
+			return result;
 		}
 
-		public ServerStatus ServerStatus(Guid id)
+		public RecycleStatus ServerStatus(Guid id)
 		{
-			ServerStatus result = new();
+			RecycleStatus result = new();
 			if (!repository.Exists(id))
 			{
 				throw new NotExistsException("Server", id.ToString());
@@ -123,7 +136,10 @@ namespace DesafioSeventh.Service
 					throw new CodeValidationException(resultadoValidacao, nameof(Server));
 				}
 
+				OnBeforeServerUpdate?.Invoke(id);
 				repository.Update(id, serverUp);
+				OnAfterServerUpdate?.Invoke(id);
+
 				return serverUp;
 			}
 		}
