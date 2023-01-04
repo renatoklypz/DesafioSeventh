@@ -1,9 +1,4 @@
 ﻿using DesafioSeventh.Domain.Providers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DesafioSeventh.Web.Providers
 {
@@ -33,6 +28,13 @@ namespace DesafioSeventh.Web.Providers
 			}
 		}
 
+		public void CreateServer(Guid serverId)
+		{
+			if (!Directory.Exists(Path.Combine(basePath, serverId.ToString())))
+			{
+				Directory.CreateDirectory(Path.Combine(basePath, serverId.ToString()));
+			}
+		}
 		public void DeleteServer(Guid serverId)
 		{
 			if (Directory.Exists(Path.Combine(basePath, serverId.ToString())))
@@ -68,10 +70,7 @@ namespace DesafioSeventh.Web.Providers
 
 		public Stream Save(Guid serverId, Guid videoId, Stream file, string extension)
 		{
-			if (!Directory.Exists(Path.Combine(basePath, serverId.ToString())))
-			{
-				Directory.CreateDirectory(Path.Combine(basePath, serverId.ToString()));
-			}
+			CreateServer(serverId);
 
 			using (var _file = File.Create(Path.Combine(basePath, serverId.ToString(), $"{videoId}.{extension}")))
 			{

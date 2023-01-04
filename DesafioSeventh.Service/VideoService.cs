@@ -37,7 +37,7 @@ namespace DesafioSeventh.Service
 		public Video Create(Guid serverId, VideoViewModel video, Stream file, string extension)
 		{
 			//Validar Parâmetro
-			if(serverId == default)
+			if (serverId == default)
 			{
 				throw new ArgumentNullException(nameof(serverId));
 			}
@@ -58,13 +58,13 @@ namespace DesafioSeventh.Service
 			}
 
 			//Validar se servidor existe
-			if(serverDomain.Get(serverId) == null)
+			if (serverDomain.Get(serverId) == null)
 			{
-				throw new ConflictException("ServerId");
+				throw new ServerNotFoundException(serverId.ToString());
 			}
 
 			//Validar se vídeo tem ZERO Bytes
-			if(file.Length == 0)
+			if (file.Length == 0)
 			{
 				throw new InvalidVideoFileException("size_zero");
 			}
@@ -99,21 +99,57 @@ namespace DesafioSeventh.Service
 
 		public IEnumerable<Video> Get(Guid serverId)
 		{
+			if (serverDomain.Get(serverId) == null)
+			{
+				throw new ServerNotFoundException(serverId.ToString());
+			}
+
 			return repository.Get(serverId);
 		}
 
 		public Video Get(Guid serverId, Guid videoId)
 		{
+			if (serverDomain.Get(serverId) == null)
+			{
+				throw new ServerNotFoundException(serverId.ToString());
+			}
+
+			if (repository.Get(serverId, videoId) == null)
+			{
+				throw new NotExistsException("VideoId", videoId.ToString());
+			}
+
 			return repository.Get(serverId, videoId);
 		}
 
 		public Stream GetBinary(Guid serverId, Guid videoId, out string fileName)
 		{
+			if (serverDomain.Get(serverId) == null)
+			{
+				throw new ServerNotFoundException(serverId.ToString());
+			}
+
+			if (repository.Get(serverId, videoId) == null)
+			{
+				throw new NotExistsException("VideoId", videoId.ToString());
+			}
+
 			return fileProfile.Get(serverId, videoId, out fileName);
 		}
 
 		public Video Delete(Guid serverId, Guid id)
 		{
+
+			if (serverDomain.Get(serverId) == null)
+			{
+				throw new ServerNotFoundException(serverId.ToString());
+			}
+
+			if (repository.Get(serverId, id) == null)
+			{
+				throw new NotExistsException("VideoId", id.ToString());
+			}
+
 			var result = repository.Delete(serverId, id, (serverId, videoId) => fileProfile.Delete(serverId, videoId));
 			return result;
 		}
@@ -121,6 +157,11 @@ namespace DesafioSeventh.Service
 		public void DeleteAll(Guid serverId)
 		{
 			repository.DeleteAll(serverId);
+		}
+
+		public IEnumerable<Video> GetByDateBefore(DateTime dateRemoved)
+		{
+			return repository.GetByDateBefore(dateRemoved);
 		}
 	}
 }

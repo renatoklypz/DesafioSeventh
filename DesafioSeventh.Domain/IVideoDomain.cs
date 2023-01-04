@@ -20,6 +20,7 @@ namespace DesafioSeventh.Domain
 		/// <param name="extension">Extensão do vídeo</param>
 		/// <returns>Informações do vídeo</returns>
 		Video Create(Guid serverId, VideoViewModel entity, Stream file, string extension);
+		IEnumerable<Video> GetByDateBefore(DateTime dateRemoved);
 
 		/// <summary>
 		/// Apaga um vídeo

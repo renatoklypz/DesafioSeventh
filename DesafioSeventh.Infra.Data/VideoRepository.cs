@@ -1,5 +1,6 @@
 ﻿using DesafioSeventh.Domain;
 using DesafioSeventh.Domain.Model;
+using DesafioSeventh.Domain.Providers;
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
@@ -9,10 +10,9 @@ namespace DesafioSeventh.Infra.Data
 	public class VideoRepository : IVideoRepository
 	{
 		readonly DBContextDefault context;
-		public VideoRepository(DbConnection dbConnection)
+		public VideoRepository(IContextProvider<DBContextDefault> dbConnection)
 		{
-			context = new DBContextDefault(dbConnection);
-
+			context = dbConnection.GetContext();
 		}
 
 		public Video? Create(Video entity, Action<Guid, Guid> onCreate)
@@ -37,6 +37,10 @@ namespace DesafioSeventh.Infra.Data
 		public Video? Delete(Guid serverId, Guid videoId, Action<Guid, Guid> onDelete)
 		{
 			var server = context.Videos.FirstOrDefault(f => f.Id == videoId && f.ServerId == serverId);
+			if(server == null)
+			{
+				return null;
+			}
 			_ = context.Entry(server).State = EntityState.Deleted;
 			using (var trans = context.Database.BeginTransaction())
 			{
@@ -76,6 +80,13 @@ namespace DesafioSeventh.Infra.Data
 		{
 			var video = context.Videos.FirstOrDefault(f => f.Id == videoId && f.ServerId == serverId);
 			return video;
+		}
+
+		public IEnumerable<Video> GetByDateBefore(DateTime dateRemoved)
+		{
+			dateRemoved = dateRemoved.Date.AddDays(1).AddMilliseconds(-1);
+			var videos = context.Videos.Where(f => f.CreatedAt <= dateRemoved);
+			return videos;
 		}
 	}
 }

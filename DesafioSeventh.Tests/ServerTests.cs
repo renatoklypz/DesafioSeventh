@@ -9,6 +9,7 @@ namespace DesafioSeventh.Tests
 	public class ServerTests
 	{
 		IServerRepository _serverRepository = Substitute.For<IServerRepository>();
+		IVideoDomain _videoDomain = Substitute.For<IVideoDomain>();
 		IServerDomain _serverDomain;
 		Func<Guid, ServerCreate, Server> makeClass = (Guid id, ServerCreate sc) => new Server
 		{
@@ -25,7 +26,7 @@ namespace DesafioSeventh.Tests
 		[SetUp]
 		public void Setup()
 		{
-			_serverDomain = new ServerService(_serverRepository);
+			_serverDomain = new ServerService(_serverRepository, _videoDomain);
 		}
 
 		/// <summary>
@@ -135,6 +136,19 @@ namespace DesafioSeventh.Tests
 					Assert.That(new Guid(id), Is.EqualTo(server.Id), "Gerou um ID quando já existia um.");
 				}
 			}
+		}
+
+		[Test]
+		public void CallDeleteAllVideos()
+		{
+			var id = Guid.NewGuid();
+			bool del = false;
+
+			_serverRepository.Exists(id).Returns(true);
+			_videoDomain.When(a => a.DeleteAll(id)).Do((a) => del = true);
+
+			_serverDomain.Delete(id);
+			Assert.That(del, Is.True);
 		}
 	}
 }

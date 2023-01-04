@@ -20,7 +20,7 @@ namespace DesafioSeventh.Domain
 		Server Update(Guid id, ServerUpdate servidor);
 		IEnumerable<Server> Get();
 		Server Get(Guid id);
-		Server Remove(Guid id);
+		Server Delete(Guid id);
 		RecycleStatus ServerStatus(Guid id);
 	}
 }

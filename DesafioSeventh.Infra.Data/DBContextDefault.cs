@@ -1,10 +1,11 @@
 ﻿using DesafioSeventh.Domain.Model;
+using DesafioSeventh.Domain.Providers;
 using System.Data.Common;
 using System.Data.Entity;
 
 namespace DesafioSeventh.Infra.Data
 {
-	public class DBContextDefault : DbContext
+	public class DBContextDefault : DbContext, IContextProvider<DBContextDefault>
 	{
 		public DBContextDefault() : base("Default")
 		{
@@ -24,6 +25,11 @@ namespace DesafioSeventh.Infra.Data
 		protected override void OnModelCreating(DbModelBuilder modelBuilder)
 		{
 			base.OnModelCreating(modelBuilder);
+		}
+
+		public DBContextDefault GetContext()
+		{
+			return this;
 		}
 
 		public DbSet<Server> Servers { get; set; }

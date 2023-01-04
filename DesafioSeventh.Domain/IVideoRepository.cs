@@ -38,5 +38,6 @@ namespace DesafioSeventh.Domain
 		/// <returns>Informações do Vídeo</returns>
 		Video Get(Guid serverId, Guid videoId);
 		void DeleteAll(Guid serverId);
+		IEnumerable<Video> GetByDateBefore(DateTime dateRemoved);
 	}
 }

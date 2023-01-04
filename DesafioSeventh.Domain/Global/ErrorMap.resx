@@ -120,6 +120,9 @@
   <data name="NotExists" xml:space="preserve">
     <value>Registro "{1}" não encontrado em [{0}]</value>
   </data>
+  <data name="recycle_invalid_day" xml:space="preserve">
+    <value>Dia [{0}] inválido</value>
+  </data>
   <data name="vid_invalid_file" xml:space="preserve">
     <value>Video inválido: "{0}"</value>
   </data>
@@ -128,5 +131,8 @@
   </data>
   <data name="vid_invalid_file_size_zero" xml:space="preserve">
     <value>O arquivo parece não ter conteúdo</value>
+  </data>
+  <data name="vid_server_not_found" xml:space="preserve">
+    <value>Servidor [{0}] não encontrado</value>
   </data>
 </root>

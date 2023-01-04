@@ -13,6 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Tests", "Des
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioSeventh.Infra.Data", "DesafioSeventh.Infra.Data\DesafioSeventh.Infra.Data.csproj", "{8351BFA9-7079-4D98-A404-DB349921170F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Itens de Solução", "Itens de Solução", "{8140EF1B-7CD2-4001-BF84-5B4D038DC2A2}"
+	ProjectSection(SolutionItems) = preProject
+		API Desafio.postman_collection.json = API Desafio.postman_collection.json
+		Local.postman_environment.json = Local.postman_environment.json
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

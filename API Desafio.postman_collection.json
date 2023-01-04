@@ -1,0 +1,362 @@
+{
+	"info": {
+		"_postman_id": "2bd987dd-375d-48eb-9e99-cfb03613d6ee",
+		"name": "API Desafio",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "675778"
+	},
+	"item": [
+		{
+			"name": "Recycler",
+			"item": [
+				{
+					"name": "Process",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_recycle}}/process/0",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_recycle}}",
+								"process",
+								"0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_recycle}}/status",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_recycle}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Servers",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Available",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/available/{{server_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"available",
+								"{{server_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"server_id\", pm.response.json().id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Homeland\",\r\n    \"ip\": \"120.0.0.1\",\r\n    \"port\": 80\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Modificar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Gatway\",\r\n    \"ip\": \"192.168.0.1\",\r\n    \"port\": 80\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Videos",
+			"item": [
+				{
+					"name": "Get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}/{{controller_video}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}",
+								"{{controller_video}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}/{{controller_video}}/{{video_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}",
+								"{{controller_video}}",
+								"{{video_id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById Download",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}/{{controller_video}}/{{video_id}}/binary",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}",
+								"{{controller_video}}",
+								"{{video_id}}",
+								"binary"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var id = pm.response.json().id;\r",
+									"pm.test(`id: ${id}`)\r",
+									"pm.environment.set(\"video_id\", id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "binary",
+									"type": "file",
+									"src": "/C:/Users/renat/Videos/Captures/Postman 2023-01-02 23-09-57.mp4"
+								},
+								{
+									"key": "description",
+									"value": "Post Free",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}/{{controller_video}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}",
+								"{{controller_video}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{Url}}/{{controller_server}}/{{server_id}}/{{controller_video}}/{{video_id}}",
+							"host": [
+								"{{Url}}"
+							],
+							"path": [
+								"{{controller_server}}",
+								"{{server_id}}",
+								"{{controller_video}}",
+								"{{video_id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "controller_recycle",
+			"value": "recycler",
+			"type": "string"
+		},
+		{
+			"key": "controller_server",
+			"value": "servers",
+			"type": "string"
+		},
+		{
+			"key": "controller_video",
+			"value": "videos",
+			"type": "string"
+		}
+	]
+}

@@ -8,6 +8,11 @@ namespace DesafioSeventh.Web.Providers
 	{
 		private static ConcurrentDictionary<Guid, ScheduleRemoveManage<Server>> _servers = new ConcurrentDictionary<Guid, ScheduleRemoveManage<Server>>();
 
+		public IEnumerable<ScheduleRemoveManage<Server>> GetRunning()
+		{
+			return _servers.Values.Where(p => p.Status == ScheduleRemoveStatus.Running);
+		}
+
 		public IEnumerable<ScheduleRemoveManage<Server>> Get()
 		{
 			return _servers.Values.Where(p => p.Status == ScheduleRemoveStatus.Waiting);

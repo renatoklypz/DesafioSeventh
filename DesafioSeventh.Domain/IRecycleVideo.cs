@@ -2,7 +2,7 @@
 
 namespace DesafioSeventh.Domain
 {
-	public interface IRecycleVideo
+	public interface IRecycleVideoDomain
 	{
 		void Recycle(int days);
 		RecycleStatus Status { get; }

@@ -70,6 +70,15 @@ namespace DesafioSeventh.Domain.Global {
         }
         
         /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Dia [{0}] inválido.
+        /// </summary>
+        internal static string recycle_invalid_day {
+            get {
+                return ResourceManager.GetString("recycle_invalid_day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Consulta uma cadeia de caracteres localizada semelhante a Video inválido: &quot;{0}&quot;.
         /// </summary>
         internal static string vid_invalid_file {
@@ -93,6 +102,15 @@ namespace DesafioSeventh.Domain.Global {
         internal static string vid_invalid_file_size_zero {
             get {
                 return ResourceManager.GetString("vid_invalid_file_size_zero", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Consulta uma cadeia de caracteres localizada semelhante a Servidor [{0}] não encontrado.
+        /// </summary>
+        internal static string vid_server_not_found {
+            get {
+                return ResourceManager.GetString("vid_server_not_found", resourceCulture);
             }
         }
     }

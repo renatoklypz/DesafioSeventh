@@ -1,33 +1,41 @@
-﻿using DesafioSeventh.Domain.Model;
+﻿using DesafioSeventh.Domain;
+using DesafioSeventh.Domain.Model;
 using DesafioSeventh.Domain.Providers;
+using DesafioSeventh.Domain.ViewModel;
 
 namespace DesafioSeventh.Web.Workers
 {
-	public class DeleteServerWorker : BackgroundService
+	public class RecycleWorker : BackgroundService
 	{
-		private readonly IScheduleRemoveWorkerProvider<Server> provider;
-		private readonly IVideoFileProvider fileProvider;
+		private readonly IScheduleRemoveWorkerProvider<RecycleSchedule> provider;
+		private readonly IVideoDomain videoDomain;
 
-		public DeleteServerWorker(IScheduleRemoveWorkerProvider<Server> provider, IVideoFileProvider fileProvider)
+		public RecycleWorker(IScheduleRemoveWorkerProvider<RecycleSchedule> provider, IVideoDomain videoDomain)
 		{
 			this.provider = provider;
-			this.fileProvider = fileProvider;
+			this.videoDomain = videoDomain;
 		}
+
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 		{
 			while (!stoppingToken.IsCancellationRequested)
 			{
 				foreach (var item in provider.Get())
 				{
-					item.Status = ScheduleRemoveStatus.Running;
+					
+					 item.Status = ScheduleRemoveStatus.Running;
 					try
 					{
-						Console.WriteLine($"ServerId: {item.Item.Id}");
-						fileProvider.DeleteServer(item.Item.Id);
+						IEnumerable<Video> toDelete = videoDomain.GetByDateBefore(item.Item.DateRemoved).ToList();
+						foreach (var itemDelete in toDelete)
+						{
+							videoDomain.Delete(itemDelete.ServerId, itemDelete.Id);
+						}
 						provider.Remove(item);
 					}
 					catch (Exception ex)
 					{
+
 						if (item.CreatedAt <= DateTime.Now.AddDays(-1))
 						{
 							provider.Remove(item);
@@ -37,10 +45,10 @@ namespace DesafioSeventh.Web.Workers
 							item.Status = ScheduleRemoveStatus.Waiting;
 						}
 						Console.ForegroundColor = ConsoleColor.Red;
-						Console.WriteLine(ex);
+						Console.WriteLine($"Recycle: {ex}");
 						Console.ForegroundColor = ConsoleColor.White;
-
 					}
+
 				}
 				await Task.Delay(10000, stoppingToken);
 			}

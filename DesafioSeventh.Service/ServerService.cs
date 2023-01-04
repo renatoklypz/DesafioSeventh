@@ -15,6 +15,7 @@ namespace DesafioSeventh.Service
 	public class ServerService : IServerDomain
 	{
 		private readonly IServerRepository repository;
+		private readonly IVideoDomain videoDomain;
 		private IMapper _map;
 
 		public ServerService()
@@ -23,9 +24,10 @@ namespace DesafioSeventh.Service
 			_map = config.CreateMapper();
 		}
 
-		public ServerService(IServerRepository repository) : this()
+		public ServerService(IServerRepository repository, IVideoDomain videoDomain) : this()
 		{
 			this.repository = repository;
+			this.videoDomain = videoDomain;
 		}
 
 		public event ServerEventHandler OnAfterServerCreate;
@@ -74,7 +76,7 @@ namespace DesafioSeventh.Service
 			return repository.Get(id);
 		}
 
-		public Server Remove(Guid id)
+		public Server Delete(Guid id)
 		{
 
 			if (!repository.Exists(id))
@@ -83,6 +85,7 @@ namespace DesafioSeventh.Service
 			}
 
 			OnBeforeServerDelete?.Invoke(id);
+			videoDomain.DeleteAll(id);
 			var result = repository.Remove(id);
 			OnAfterServerDelete?.Invoke(id);
 			return result;

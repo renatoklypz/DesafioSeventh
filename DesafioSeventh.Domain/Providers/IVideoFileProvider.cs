@@ -46,5 +46,6 @@ namespace DesafioSeventh.Domain.Providers
 		/// </summary>
 		/// <param name="serverId">Id do servidor</param>
 		void DeleteServer(Guid serverId);
+		void CreateServer(Guid serverId);
 	}
 }

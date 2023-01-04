@@ -4,7 +4,8 @@ using DesafioSeventh.Web.Workers;
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.ConfigureServices(services =>
 {
-	services.AddHostedService<DeleteServerWorker>();
+	services.AddHostedService<DeleteServerWorker>()
+			.AddHostedService<RecycleWorker>();
 });
 
 SetupHelper.Configuration = builder.Configuration;
@@ -27,7 +28,11 @@ builder.Services.AddControllers(opt =>
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(s =>
+{
+	s.IncludeXmlComments(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DesafioSeventh.Web.xml"), true);
+	s.EnableAnnotations();
+});
 
 builder.Services.AddInject();
 

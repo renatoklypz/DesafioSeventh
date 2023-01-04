@@ -10,8 +10,10 @@ namespace DesafioSeventh.Web.Helpers
 		private static Dictionary<string, HttpStatusCode> errorCodes = new Dictionary<string, HttpStatusCode>()
 		{
 			{"err_conflict", HttpStatusCode.Conflict },
+			{"server_not_found", HttpStatusCode.NotFound },
 			{"err_not_exists", HttpStatusCode.NotFound },
 			{"err_validation", HttpStatusCode.BadRequest },
+			{"recycle_invalid_day", HttpStatusCode.BadRequest },
 			{"vid_invalid_file", HttpStatusCode.BadRequest }
 		};
 

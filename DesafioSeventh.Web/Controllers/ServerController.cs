@@ -3,11 +3,16 @@ using DesafioSeventh.Domain.Model;
 using DesafioSeventh.Domain.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using DesafioSeventh.Web.Helpers;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace DesafioSeventh.Web.Controllers
 {
+	/// <summary>
+	/// Manutenção de Servidor
+	/// </summary>
 	[ApiController]
 	[Route("api/[controller]")]
+	[SwaggerDiscriminator("Manutenção de servidor")]
 	public class ServersController : ControllerBase
 	{
 		private readonly IServerDomain domain;
@@ -21,8 +26,7 @@ namespace DesafioSeventh.Web.Controllers
 		/// Obtér a lista de servidores cadastrados
 		/// </summary>
 		[HttpGet]
-		[ProducesResponseType(200)]
-		[ProducesResponseType(204, Type = typeof(void))]
+		[SwaggerResponse(200)]
 		public IEnumerable<Server> Get() => domain.Get();
 
 		/// <summary>
@@ -30,8 +34,8 @@ namespace DesafioSeventh.Web.Controllers
 		/// </summary>
 		/// <param name="id">Identificação do servidor</param>
 		[HttpGet("{id}")]
-		[ProducesResponseType(200)]
-		[ProducesResponseType(404, Type = typeof(WebException))]
+		[SwaggerResponse(200, "Sucesso ao obter um servidor")]
+		[SwaggerResponse(404, "Servidor não encontrado",Type = typeof(WebException))]
 		public Server Get(Guid id) => domain.Get(id);
 
 		/// <summary>
@@ -40,9 +44,9 @@ namespace DesafioSeventh.Web.Controllers
 		/// <param name="server">Dados do Servidor</param>
 		/// <returns>Servidor criado</returns>
 		[HttpPost]
-		[ProducesResponseType(201)]
-		[ProducesResponseType(409, Type = typeof(WebException))]
-		[ProducesResponseType(400, Type = typeof(WebException))]
+		[SwaggerResponse(201, "Servidor criado com sucesso")]
+		[SwaggerResponse(409, "Id informado já existe. (Opte por não preencher o Id do Servidor)", Type = typeof(WebException))]
+		[SwaggerResponse(400, "Erro de preenchimento", Type = typeof(WebException))]
 		public Server Create([FromBody] ServerCreate server)
 		{
 			var result = domain.Create(server);
@@ -57,9 +61,9 @@ namespace DesafioSeventh.Web.Controllers
 		/// <param name="server">Dados do servidor atualizado</param>
 		/// <returns>Servidor atualizado</returns>
 		[HttpPut("{id}")]
-		[ProducesResponseType(200)]
-		[ProducesResponseType(404, Type = typeof(WebException))]
-		[ProducesResponseType(400, Type = typeof(WebException))]
+		[SwaggerResponse(200, "Sucesso ao alterar um servidor")]
+		[SwaggerResponse(404, "Servidor não encontrado", Type = typeof(WebException))]
+		[SwaggerResponse(400, "Erro de preenchimento", Type = typeof(WebException))]
 		public Server Update(Guid id, [FromBody] ServerUpdate server) => domain.Update(id, server);
 
 		/// <summary>
@@ -68,9 +72,9 @@ namespace DesafioSeventh.Web.Controllers
 		/// <param name="id">Id do servidor</param>
 		/// <returns>Servidor removido</returns>
 		[HttpDelete("{id}")]
-		[ProducesResponseType(200)]
-		[ProducesResponseType(404, Type = typeof(WebException))]
-		public Server Delete(Guid id) => domain.Remove(id);
+		[SwaggerResponse(200, "Sucesso ao apagar um servidor")]
+		[SwaggerResponse(404, "Servidor não encontrado", Type = typeof(WebException))]
+		public Server Delete(Guid id) => domain.Delete(id);
 
 		/// <summary>
 		/// Verifica se o servidor (IP + PORT) está acessível
@@ -78,8 +82,8 @@ namespace DesafioSeventh.Web.Controllers
 		/// <param name="id">Id do servidor</param>
 		/// <returns>Status do servidor</returns>
 		[HttpGet("available/{id}")]
-		[ProducesResponseType(200)]
-		[ProducesResponseType(404, Type = typeof(WebException))]
+		[SwaggerResponse(200, "Sucesso ao obter o status do servidor")]
+		[SwaggerResponse(404, "Servidor não encontrado", Type = typeof(WebException))]
 		public RecycleStatus Available(Guid id) => domain.ServerStatus(id);
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using DesafioSeventh.Domain;
 using DesafioSeventh.Domain.Model;
+using DesafioSeventh.Domain.Providers;
 using System.Data.Common;
 using System.Data.Entity;
 
@@ -8,10 +9,9 @@ namespace DesafioSeventh.Infra.Data
 	public class ServerRepository : IServerRepository
 	{
 		readonly DBContextDefault context;
-		public ServerRepository(DbConnection dbConnection)
+		public ServerRepository(IContextProvider<DBContextDefault> dbConnection)
 		{
-			context = new DBContextDefault(dbConnection);
-
+			context = dbConnection.GetContext();
 		}
 		public Server? Create(Server servidor)
 		{
